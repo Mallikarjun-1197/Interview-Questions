@@ -1,0 +1,48 @@
+
+6thApril
+1. Given Employee and Department table(with emp id in it) find the sum of salaries of all employess belonging to a specicfic department.
+2. How do you authenticate a web api ? 
+   What are the differences between WebServices and WebAPI ?
+3. What is JWT how will it be implemented / how does it work ?
+4. Explain concept of Filters in MVC.. how can u write custom one ?
+5. Explain concept of Routing in MVC.
+6. How do you validate a form in MVC ? (dont remember the excat question here but the interviewr wants to know if i know the concept of
+DataAnnotations and Model validation and can we have client and server validation ( enableClientValidation = false) related concept.
+7. Scenario : Design a page similar to how cricbuzz page is : For every specific interval of time the a part of page should update with data coming from server 
+	My answer was i will use ajax and paint the DOM with the response-- this is a very heavy approach
+	Interviewr suggested that we can make use of partial pages concept in this scenario.
+8. Write a CSS that behaves differently in different browsers.
+9. Difference between IENUMERABLE and IQUERYABLE
+10. if we declare a variable in c# like var test = "string", when does the data type binding occur ? Is it at compile time or run time ? A: compile time.
+11. What is the difference between ViewBag, ViewData, TempData.
+12. what is CORS?
+13. How will you test an API ? My answer was i wil make use of Fiddler, Postman, tools apart from this, i can also send this from a browser window and also hit it 
+from javascript using XmlHttpRequestObject
+14. We need to pass list of objects of differen types to input to a web api ? how will u do it ? Question was {Class1Obj,Class2Obj,Class3Obj} this should be the input to api,
+how will u pass it ? My answer was i will create another class that encompasses these 3 classes InpClass { Class1, Class2, Class3 } as a Model and pass this. interviewr was not 
+OK with this as we are creating a new class..not sure the correct answer ?
+15.Why do we need an interface ? why cant we write all things in a class? I said many reasons.. but one things in invented here was to achieve Liskov substitution principle in 
+SOLID we need to implement code in interfaces .
+16. MethodOVerloading vs MethodOverriding.
+
+
+
+
+
+8th April
+Managerial Round:
+Introduce yourself.
+1.Given Emp table and Dept Table : a.Get employess that have departments assigned, b.Get employess that are not assigned to any department
+2.Filters in web api
+3.What are Action Filters? if we have any unhandled exception in onActionExecuitedMethod does the response still go out ? or how will you handle this ?
+A: Exception filter handles all kinds of exception be it controller or filter level
+4. Why do we have AppSetting Section in web.config even though we can use const variables and write code?
+5. If we change value of a key of an appsetting does the application have any downtime ? A: Yes, when we do it AppPool gets reset.
+6. I have a list of integers of 2000 variables randomly spread, write a LINQ to get first smallest 100 integers using LINQ .
+   A: intergersList.sort().. we can use skip and take methods.
+7. How do you handle interpersonal conflicts if u have in team
+8. How do you respond for a Rude TL 
+9. inner join , right join 
+
+
+
