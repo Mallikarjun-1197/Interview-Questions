@@ -1,5 +1,5 @@
-
 6thApril
+
 1. Given Employee and Department table(with emp id in it) find the sum of salaries of all employess belonging to a specicfic department.
 2. How do you authenticate a web api ? 
    What are the differences between WebServices and WebAPI ?
@@ -30,6 +30,7 @@ SOLID we need to implement code in interfaces .
 
 
 8th April
+
 Managerial Round:
 Introduce yourself.
 1.Given Emp table and Dept Table : a.Get employess that have departments assigned, b.Get employess that are not assigned to any department
