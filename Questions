@@ -1,3 +1,14 @@
+Mid Auguest for Acc.
+Tech 1:
+1. Introduce yourself
+2. Explain about your current project. what stack and all..
+3. Why MVC?
+4. Difference between Interface and Abstract Class ? Interviewer wanted me to write classes and explain and not mention any definitions as she can get them from google :P
+5. Abstraction vs Encapsulation.
+6. 
+
+
+
 6thApril
 
 1. Given Employee and Department table(with emp id in it) find the sum of salaries of all employess belonging to a specicfic department.
@@ -24,6 +35,9 @@ OK with this as we are creating a new class..not sure the correct answer ?
 15.Why do we need an interface ? why cant we write all things in a class? I said many reasons.. but one things in invented here was to achieve Liskov substitution principle in 
 SOLID we need to implement code in interfaces .
 16. MethodOVerloading vs MethodOverriding.
+17. which one of data retrival is faster , LINQ or ADO.net ? A: My take was LINQ as i thought i need not write old ado.net code.. but mentioned that internally linq
+uses ado,net to establish connection and run query ... despite not giving a point to point answer, i gave a logical conclusion that it may be linq.
+But both are eqaully faster depending on what we fire .. linq has over head of creating the manyual sql to fire on DB.
 
 
 
