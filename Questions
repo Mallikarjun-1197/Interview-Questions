@@ -41,8 +41,10 @@ from javascript using XmlHttpRequestObject
 14. We need to pass list of objects of differen types to input to a web api ? how will u do it ? Question was {Class1Obj,Class2Obj,Class3Obj} this should be the input to api,
 how will u pass it ? My answer was i will create another class that encompasses these 3 classes InpClass { Class1, Class2, Class3 } as a Model and pass this. interviewr was not 
 OK with this as we are creating a new class..not sure the correct answer ?
-15.Why do we need an interface ? why cant we write all things in a class? I said many reasons.. but one things in invented here was to achieve Liskov substitution principle in 
-SOLID we need to implement code in interfaces .
+15.Why do we need an interface ? why cant we write all things in a class? 
+I said many reasons.. but one things in invented here was to achieve Liskov substitution principle in SOLID we need to implement code in interfaces .
+One more scenario is if u write a method whch returns multiple types of objects ddepending on conditinos we can make one interface and make all those classes
+implement it and put return type of the method as interface.
 16. MethodOVerloading vs MethodOverriding.
 17. which one of data retrival is faster , LINQ or ADO.net ? A: My take was LINQ as i thought i need not write old ado.net code.. but mentioned that internally linq
 uses ado,net to establish connection and run query ... despite not giving a point to point answer, i gave a logical conclusion that it may be linq.
