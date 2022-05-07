@@ -71,4 +71,37 @@ A: Exception filter handles all kinds of exception be it controller or filter le
 9. inner join , right join 
 
 
+6th May:
+
+Why are u leaving prev org?
+Pillars of OOP?
+var vs dynamic
+static vs dynamic binding
+Virtual keyword
+Extension methods and what are the rules we need to follow while writing an extension method
+Private constructor and its use ? ( No object can be created and class cant be inherited)
+What is a sealed class ? (can be instantiated but no inheritance)
+why c# do not allow multiple inheritance ? What is diamond problem ?
+What is the use of Garbage collector ( I made sure i specified that it is a part of .net CLR and flushes out unused "managed" resources)
+Method hiding concept ?
+Interface vs abstract class
+Explain MVC Arch
+Explain filters and why we do we need them ?
+NoAction Attribute?
+Explain Bundling and minification in mvc and why we need it ?
+When user enters http:www.xyz.com/Employee/Index how does this request be served in MVC arch ? ( I explained about route table and how url is routed to controller)
+What DataAnnotations you have used till now ?
+What is ModelState and why is it used ?
+Why WebAPI?
+What are the various webApi return types? ( I failed to answer this, yeah ! I did :( It has been a little while that i worked on web api so forgot the concepts :human errors :P
+What is the role of MediaTypeFormatter ? ( I started from Content negotiation to show off that i understand the concept thoroughly)
+What are FromURI and FromBody attributes in WebApi?
+Write a sql to get second highest salary..
+write code to check if string is palindrome?
+---- I answered most of the questions but elaborated th explanation. interviewer suggestion was to BeSpecific, Make is ASAP (simple as possible) and optimize the answers.
+indirectly suggested to respect others time as the interview went for an hour ( 30 min more than blocked time) :P.
+
+
+
+
 
