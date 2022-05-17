@@ -92,6 +92,8 @@ Explain Bundling and minification in mvc and why we need it ?
 When user enters http:www.xyz.com/Employee/Index how does this request be served in MVC arch ? ( I explained about route table and how url is routed to controller)
 What DataAnnotations you have used till now ?
 What is ModelState and why is it used ?
+Difference between Functions and stored proc in sql ?
+Difference between clustured and non clustered index ?
 Why WebAPI?
 What are the various webApi return types? ( I failed to answer this, yeah ! I did :( It has been a little while that i worked on web api so forgot the concepts :human errors :P
 What is the role of MediaTypeFormatter ? ( I started from Content negotiation to show off that i understand the concept thoroughly)
