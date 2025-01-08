@@ -1,0 +1,73 @@
+ORM : 
+Object relation mapping  is a technique that lets you query and manipulate data from a database using an object-oriented paradigm
+An ORM library is a completely ordinary library written in your language of choice that encapsulates the code needed to manipulate the data, so you don't use SQL anymore; you interact directly with an object in the same language you're using
+
+Object Model is concerned with the following three concepts Data Abstraction Encapsulation Inheritance 
+The relational model used the basic concept of a relation or table.
+Object-relational mapping (OR mapping) products integrate object programming language capabilities with relational databases.
+
+There are many libs that have implemented ORM and we can use it in our projs 
+Ex : Hibernate: JAVA
+Django ORM: Django
+SQL Alchemy: Flask
+Microsoft Entity Framework: .NET framework
+Dapper ORM: C#
+JAVA Persistence API: JAVA
+NHibernate: .NET framework
+JOOQ ORM: JAVA
+Doctrine: PHP
+
+Frameworks that implement ORMs for us will help us as a bridge between 2 worlds that is object world and relational DB world and
+"Each row is turned to an object".
+
+In Object world we have Inheritance, polymorphism but we dont have it in Relational side this mismatch is also handled in ORMS
+https://www.youtube.com/watch?v=dawpJCQ1nHM - This video gives a perspective for use of ORMs
+
+
+Now to understand any ORM framework, in our case EF we need to understand Concept of LINQ..
+
+we can create our own ORM from scratch like https://www.youtube.com/watch?v=6lHEBEcYkCY
+IN ORM : 
+ SQL Table == Class in OOP
+ Rows ======== Instances of class
+ columns ----- Attributes.
+
+LINQ stands for Langauge Integrated query which is basically a Unified Programming "model" for any kind of data access.
+LINQ enables us to query and manipulate data independantly of data source ( Data Sources can be SQL, Excel, XML, etc etc)
+Remember data source can also be a business object (normal complex object that we create in our c#code)
+
+LINQ can be applied on the datasources that implement the IEnumerable interface. **
+
+There are variations of LINQ..
+	LINQ to Objects, --> Linq appplied on IEnumerable objects List<>,Dict..
+	LINQ to SQL, 
+	LINQ to Dataset,
+	LINQ to Entites
+
+
+Every linq expression returns an IEnumerable.. Refere this source https://www.youtube.com/watch?v=TeGwezv1z20
+There are two type of LINQ expression evaluation : Deferred execution (When the result is accessed by looping over result i.e., by hittting the GetEnumerator())
+and Forced execution(Calling .ToList() or ToArray() or Another way to force the query execution is when we perform functions that need to iterate the results, such as Count(), Max(), Average(), etc.).
+
+Refer this https://www.youtube.com/watch?v=4sHcMxKwBZI to look at how LINQ is perf friendly at times.
+
+
+
+Assume a scenario where ur applications data source is sql then we need data reader, data sets etc to talk to it, for csv or other source we need some other objects, but what
+if we have an abstraction over those and there is only one standard u can use to access/manipulate data coming from any source ?
+Thats what LINQ helps us with !
+
+Linq helps us to transform data spread in the datasource to a custom domain object with its transform feature which also provides type safety and "compile time checking"
+
+Refer this video : https://www.youtube.com/watch?v=Kn_clV8mVOM
+Refer this post where in we get to know is LINQ an ORM ?
+
+https://stackoverflow.com/questions/8163513/ls-linq-an-orm-object-relational-mapper#:~:text=then%20yes%2C%20LINQ%20is%20an%20ORM%20in%20the,within%20the%20programming%20language.%20Share%20Improve%20this%20answer
+There are variants of LINQ like LINQ to objects, LINQ to SQL ( a simple ORM).
+Linq itself is not an ORM..
+https://www.tutorialsteacher.com/linq/linq-api
+
+Entity Framework:
+https://www.entityframeworktutorial.net/ 
+EF is a ORM for .NET Eco system !
+By default EF uses Optmisitic concurrency..
