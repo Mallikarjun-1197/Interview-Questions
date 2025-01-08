@@ -1,0 +1,657 @@
+Questions:
+ 1.Using which event we can load an assembly that is not loaded by GAC ,->AssemblyResolve event.
+2. How to find types in assemblies ?
+Step1 : Get all assemblies using AppDomain.CurrentDomain.GetAssemblies()-- gets all assemblies loaded in app domain.
+Step2: loop over each and assembly (dll) and use  GetTypes.
+Foreach(var assembly in AppDomain.CurrentDomain.GetAssemblies()){
+  Foreach(var type in assembly.GetTypes())
+	Type.fullName
+}
+GetTypes()  Will return all types in assembly , GetType() is used on a know variable like, string t = “test” t.GetType()
+Basically the Type class is the foundation of Reflection and every user defined class is a child class of Object class.
+== and .Equals(). 
+If the things that are compared are value types then == compares values , if comparands are references then reference location address are compared. Same for .Equals() also, but when we use .equals on strings what happens is values are only compared because .equals is overridden in that class.
+We can provide our own implementation of .equals for our user defined types by overriding operators.
+What all operators can be overloaded?  
+A : Unary operators like +, -, !,  ~, ++, --, true, false etc can be overloaded.
+What cant be overloaded? A:  && . || , [ ], (), =, . , ?:, ->, new, is, as, sizeof
+How to override a operator in a custom class ?
+A: public static return_type Operator (operator we overload)(params)
+Ex : class customer {
+Basically while transferring data from client to server data is pushed from a stream converting it into binary format..so binary data will travel in netwk. Converting raw data to binary may miss some information like, a special character in the raw data may not have proper binary representation. So to avoid this what we do is , we encode the rawdata .and send the encoded binary version.
+By default, message header field parameters in Hypertext Transfer Protocol (HTTP) messages cannot carry characters outside the ISO- 8859-1 character set.
+If username and password contains incompatible charset than HTTP would not be able to carry those text. to prevent from this we encode user name and password with base64 to make sure we are sending HTTP compatible char over HTTP.
+What is Authentication?
+ Authentication is a process to ensure and confirms a user’s identity and whether the user is registered or not to access particular data or web pages. In other words, we can say that it is a process to validate someone against some data source.
+When we use forms authentication and say FormsAuthentication.SetAuthCookie(username, true) then by default there will be a cookie with name .authaspx created.
+ What is Authorization?
+Authorization is a security mechanism which is used to determine whether the user has access to a particular resource or not. The main point that you need to remember is, authentication happens first, then only authorization.
+
+Operator overloading:
+Public static bool Operator = (Customer c1, Customer c2){
+ //comparison logic.
+}
+What is a web API:
+A: It is framework used to build services that can be accessed over web that is using http protocol.
+It is basically developed based on the advantages given by http. (stateless, reliable, simple to call , caching etc). Using a web api one can reach to a broad range of clients or users that can access the api from mobile apps etc.
+The response of the web api can be anything like xml , json , etc (MediaType formatter ).
+Basically client sends AcceptHeaders in the http request that we fire to the api we can specify what type of response we need like application/xml  or application/json. And the server sends Content-Type: application/xml or appliucation/json.
+As you correctly note, the Accept header is used by HTTP clients to tell the server what content types they'll accept. The server will then send back a response, which will include a Content-Type header telling the client what the content type of the returned content actually is.
+However, as you may have noticed, HTTP requests can also contain Content-Type headers. Why? Well, think about POST or PUT requests. With those request types, the client is actually sending a bunch of data to the server as part of the request, and the Content-Type header tells the server what the data actually is (and thus determines how the server will parse it).
+In particular, for a POST request resulting from an HTML form submission, the Content-Type of the request will (normally) be one of the standard form content types below, as specified by the encrtype attribute on the <form> tag:
+•	application/x-www-form-urlencoded (default, older, simpler, slightly less overhead for small amounts of simple ASCII text, no file upload support)
+•	multipart/form-data (newer, adds support for file uploads, more efficient for large amounts of binary data or non-ASCII text)
+Content-negotiation : Its basically a negotiation of response type between client and server, by default the server sends a json format data, 
+When firing http request we specify accept headers like : application/xml, application/json, etc…and content-type as application/json , now we are saying send me any format in {xml or json}->accept headrs, and I am sending  json format data ->content type.
+Basically controller will return its own response type to web api pipeline and mediatype formatter will pick it and turn it to appropriate type, we can have our own formatter.
+So where can we specify this custom serialization and deserialization ? basically in asp.net web api we have a config file which is invoked by framework and file is webapi.config and it has Register method in it. We can customize httconfiguration object that should be used by our api.Config.Formatters..
+Json.NET library is generally used by Web API for JSON serialization.
+
+What should we return from a controller in web api ?
+A: In web api 1.0 we return HttpResponseMessage, this class usually is helpful to set response values such as response headers, response status, etc.
+How to create one? Request.CreateResponse<Employee>(HttpStatusCode.ok, returnObj); or Request.createErrorResponse(HttpStatusCode.NotFound,””);
+Difference between Controller and ApiController: Controller returns view and Apicontrollers return data.
+FromUri and FromBody : These are basically used during parameter binding. By default WebApi framework reads primitive types from URI (query string) and complex types from request body and that is mapped by selecting appropriate media type formatter to serialize using the content-Type property of the request..
+If we pass primitive type in uri and complex data in body then we need not use fromUri and fromBody at all.
+Basically , a typical web api will be like
+Public HttpResponseMessage {get/put/post/delete}(params)
+{
+////logic
+Return HttpRequest.createResponse<Object>(HttpStatus.ok, returnobj);
+}
+       CORS: Cross origin resource sharing is not an error , It’s a security concept built into modern    browsers . We should set cors on server that allows us server requests from other sources. Install-package Microsoft.AspNet.WebApi.Cors. in startup class on the HttpConfiguration object we say 
+EnableCorsAttribute corsAttrib = new EnableCorsAttribute(commaseperated origins ,comma separated headers,comma separated methods);
+configObject.EnableCors(cors);
+We can enable or disable cors on a specific controller and specific action. [DisbaleCors] will disable.
+On a controller class we can say [EnableCorsAttribute(“”,””,””)]
+
+Note on how a controller is invoked and action is called and params are passed. https://docs.microsoft.com/en-us/aspnet/web-api/overview/web-api-routing-and-actions/routing-and-action-selection
+Basically Microsoft introduced MVC in dot net 3.5. and versions of MVC include, 1.0, 2.0, 3.0, 4.0 , 5.0 and 5.2(current).
+How do we pass data from controller to view ? using viewdata[“”] and viewbag (dynamic)
+How do we pass data from view to controller ? using querystring,hiddenfield. Etc.
+How do we pass data from controller to controller? TempData.
+ViewData and ViewBag does not persist data between actions in such scenario we need to use tempdata.
+
+Difference between ExecuteScalar () . ExecuteNonQuery() and ExecuteQuery()
+ExecuteNonQuery-----> returns no result actions like update. Insert , and delete
+ExecuteReader() =====> select statements . result will be a DataReader
+ExecuteScalar ⇒   used to read result of aggregate functions (first rows first col) , select sum(). Select count() ///etc/
+SOLID principles:
+These are used to for software design so that the code that is written is standardized and doesn’t lead to technical holes.
+Single Responsibility rule:
+It states that there should only be a single responsibility to a class. Or there should only be single reason for a class to be altered 
+Ex: 
+class Repository{
+  create()
+ try{save()} catch(){ LogFile.Write(error message)}
+}
+The above class does 2 things, create and save and also log but a repository need not have that behaviour.so this rules out from srp.
+We need to have a separate class for logging and use it in repository class 
+2.OpenClosed Principle.
+A: It states that a software entity should be open for extension but it cannot be opened for modification. It simply states that , once a class is created it should not be modified unless to add new features to it…if it is needed to add new scenarios we need to inherit it.
+An electric adapter sticked to a wall is perfect example : because, it is fixed to wall and cannot be modified (like adding extra solts) but we can connect new adapter and extend it from there.
+Ex : 
+Public class SavingAccount  
+{  
+    //Other method and property and code  
+    Public decimal CalculateInterest(AccountType accountType)  
+    {  
+        If(AccountType==”Regular”)  
+        {  
+            //Calculate interest for regular saving account based on rules and   
+            // regulation of bank  
+            Interest = balance * 0.4;  
+            If(balance < 1000) interest -= balance * 0.2;  
+            If(balance < 50000) interest += amount * 0.4;  
+        }  
+        else if(AccountType==”Salary”)  
+        {  
+            //Calculate interest for saving account based on rules and regulation of   
+            //bank  
+            Interest = balance * 0.5;  
+        }  
+    }  
+}
+From above class if bank introduces new scheme then we need to add new else if note that this is also not following single resp.
+So using open closed rule what we can do is
+Interface Isoftwarebank{
+CalculateInterest
+}
+Public class RegularSavingAccount : IsoftwareBank{
+M1()
+}
+Public class SalarySavingAccount : IsoftwareBank{ M1() }
+Public class NoWithdrawalSavingAccount : IsoftwareBank{ M1() {    throw not implemented exception } ) }
+
+Now to calculate interest of regular saving account instantiate RegularSaving account. To calculate salarysavings instantiate salary savings.
+If bank comes with new type then new class will be written and if bank provides same features to all types the we can write an abstract class and then inherit all others from it.
+Disadvantages : We need to test many things before changing and also classes count increases.
+ Liskov substitution principle: virtual  keyword.Child class objects should be able to replace base class objects, without affecting the application integrity. Or child class instance must be able to replace parent class instance without effecting the results, that means if we use child class instance instead of parent ones, both the results should be same.
+Example : SOLID Principles in C# - Liskov Substitution Principle - Code Maze (code-maze.com)
+From the above savingsbank example, if we say in the main method 
+SavingBank sb = new RegularSaving()- ok
+SavingBank sb = new NoWithdrawalBank()- returns runtime exception.
+To avoid this using liskov we can do is :
+Interface ISavingAccount {}  
+Public Class SavingAccountWithWithdrawal : ISavingAccount  
+{  
+    Public virtual bool Withdrwal () {}   use virtual so that child can override.
+}  
+Public Class SavingAccountWithoutWithdrawal : ISavingAccount  
+{  
+}  
+Public Class RegularSavingAccount : SavingAccountWithWithdrawal  
+{   
+  Public bool Withdrwal ()  
+  { //implementation  
+  }  
+}  
+Public Class SalarySavingAccount : SavingAccountWithWithdrawal  
+{   
+  Public bool Withdrwal ()  
+  {//implementation  
+  }  
+}  
+Public Class FixDepositSavingAccount : SavingAccountWithoutWithdrawal  {}
+Now FixDepositSavingAccount can replace parent ISavingAccount and during compile time we get error that this method to withdraw is unavailable.
+Interface segregation principle:
+It basically states that, a client should not be forced to implement any methods that are not used.
+It is used to break down a fat interface into pieces depending on the implementation classes so that the sub classes need not implement unwanted methods.
+Dependency Inversion principle:
+It states that a high level module should not directly depend on lower level module but should depend on abstractions and these abstractions should not depend on details but details should depend on abstrations.
+Ex:
+Public game {
+Private Board _board;
+Game(){
+_board = new Board()
+}
+}
+Here game is strictly bound to Board, but what If I want to play on 3*3 board or 4*4 board….then 
+We need abstractions..
+Interfact IBoard{
+}
+Public threeByThree  : IBoard{
+Play()
+}
+Public FourByfour : IBoard{
+}
+And our main class will be 
+Public Game
+{
+ Private IBoard _board;
+Game(IBoard board){
+ _board = board;
+}
+}
+Now board can be anything so high level is not depending on low level class, instead depending on abstraction,
+And abstraction should not depend on details and details should depend on abstraction means :
+Lets take a car for example, the pedals and steering wheel and gear lever are abstractions of what happens inside the engine. They do not depend on the details though because if someone changes my old engine for a new one I should still be able to drive the car without knowing that the engine changed.
+Dependency Injection
+Basically dependency means waiting on some one or tightly coupling on someone. So to make a class independent of other class we inject that class with the lower class instead of main class instantiating a child class.
+The dependency inversion principle mostly applies here also.
+The high level class should be aware of the child abstraction.
+Basically we have different ways to implement DI:
+1.Constructor Injection. Where we pass the child object from outside class and high level class expects an Interface object in its parametrized constructor. Recommended to use when the injected dependency, you are using across the class methods
+2.Property/Setter Injection:
+3.Method dependency: Inject the dependency into a single method and generally for the use of that method. This could be useful only when one method of a class has dependency.
+Interface IEngine{
+Start()
+}
+GreatEngine : IEngine{  start(){ }} BadEngine :IEngine(  start(){ })..
+Public HighLevelClass {
+Public void StartEngine(IEngine eng){
+Eng.start(}
+} Now we can inject any type of engine to StartEngine,
+
+
+
+https://www.youtube.com/watch?v=BKynEBPqiIM
+https://stackoverflow.com/questions/3793105/threads-and-delegates-i-dont-fully-understand-their-relations
+https://www.interviewsansar.com/tell-me-one-real-time-use-of-delegate-without-event-used-in-your-project/
+https://www.c-sharpcorner.com/UploadFile/puranindia/C-Sharp-interview-questions/
+https://www.youtube.com/watch?v=7j3GXOHd_K8--Qpond
+https://www.youtube.com/watch?v=z6SU87k3bJk
+Inner class vs sub class : class inside a class is inner class, class inherited from parent is sub class.
+You cannot have a instance of a inner class unless u have a parent class instance.
+In terms of memory inner class has its own members like a normal class but a sub class will have parent class body as well.
+Performance overheads of interface and an abstract class.
+A:
+Difference btwn dotnet and c#? 
+A: dot net and c# are different things, dot net is a framework and c# is prog lang which has a grammar to follow whereas dotnet is a collection of libraries and it has a runtime. C# is case sensitive.
+2.Differentiate .net framwrk  4X , .net core 3X, .net 5.0
+A: 
+Cross platform:
+dot net framework 4X only works for windows os, .net core is cross platform compliant(linux, mac, windows),  .net 5.0 is a unified version on dot net frmk and core , it also has .net mono , .net Silverlight etc etc..
+perf : .net core is better than frmwrk because memory foot print is less in core.
+CLI tools : .net frmwk is more IDE based , full CLI command supported. ( dotnet new console, dotnet  build , dotnet run) we can create project in notepad and build using command line which is not the case in frmwrk.
+Packaging : packaged as one big framework in frmwrk , delivered via nuget only those chunks that we need.
+Microservice support : No in dot net frmwrk , yes in core.
+3.What is IL code and why do we need JIT.
+A: when a c# code has to run , it should be converted to machine code or native code that the machine understands, the work of the just in time compiler is to convert the IL code to machine code which is a part of dot net runtime.(JIT is part of dot net runtime CLR) when we compile a c# code it gets converted to Intermediate language code or MSIL or an assembly which is understood to JIT. Basically c# code is high level language which compiles to intermediate language which compiles to low level code.
+4. Is it possible to see the IL code visually?
+A:Yes, we have assemblers like ILDASM (dis assembler)
+ Through command line:
+1.	Change to the directory where the .NET SDK v2.0 is installed (cd /d <path>)
+2.	Run ildasm.exe
+
+
+5. why do we need to compile high level lang code to IL?
+A: The runtime environment and development env may vary. So depending on runtime env JIT will generate optimized machine code suitable for runtime env.
+
+6.Explain importance of CLR? 1. CLR invokes JIT and converts IL to Native code, 2. It runs the application and while it is running it frees up any unused space by using Garbage collector.
+
+7. What is the diff btwn managed and unmanaged code ?
+A : code that executes under the control of CLR is managed code, code that does not run under CLR ( c, c++ ) are unmanaged code.
+
+8.Explain importance of Garbage collector.
+A:It is a background process that runs continuously which clears “unused managed resources”.
+Can GC claim unmanaged objects? NO, GC is not outside CLR.
+
+9.Explain imp of CTS. Common Time system. Rules that govern the data types of all languages supported by .net frmwrk. CTS ensures that same datatype defined in 2 diff .net lang are compiled to same single common data type.
+
+10. CLS : Common language specification :  set of guide lines that prog languages to follow, this was developed because to realize cross language interoperability. One lang uses pointers and others don’t , one is case insensitive and other is sensitive.
+
+11. stack vs heap ? 2 diff memory types in dot net applications primitives are allocated to stack, here both variable and value are stored in same location. Where as in Objects or reference types the pointer to the object is stored in stack but the data is stored in heap. And the pointers value is heaps location.
+Stack stores : int, double, bool. Heap : String, Objects
+
+12.Value type and reference type : value types are those whose memory location and value are stored at same place where as reference type pointer is stored in stack where actual data is stored in heap.
+
+13. Boxing and unboxing:  when a value moves from data type to reference type it is boxing, when a value moves from ref type to val type it is unboxing.
+Ex: int i=10., Object k = I (boxing).,,,,,int p = (int)k (unboxing).
+
+14.Consequence of boxing and unboxing? PERFORMANCE. We are jumping from stack to heap and back.
+
+15 Explain implicit and explicit casting.
+A: int I =10 ; double p = I ;;;casting moving from one datatype to another. This is implicit casting , moving from lower to higher ---implicit. Whereas double d = 100.23 , int p = (int) d -Explicit. **** consequence of explicit casting is data loss.
+
+16.Array vs ArrayList ? array is fixed length , yes we can Resize  , Array.Resize<int>(oldarray, len).
+And also array are of strongly typed where as array list is flexible and is not strongly typed.
+Performance : Array is best because, arraylist has many boxing and unboxing. Because, arraylist.Add accepts an object type input.
+
+What is the difference between var and dynamic keyword ?
+A: var is early bounded where as dynamic is lately bounded.
+
+What is the use of private constructors?
+A: class abc
+{
+	Private abc()
+{
+
+}
+Public static getData(){}
+}
+Classes that have private constructors cannot be instantiated, and cannot be inherited, the use of such classes is to provide a house for utility methods and common routines.
+
+17.What are generic collections?
+A : It takes all the good things from Array (strongly typed) and good things from ArrayList(flexible),
+Ex  : List<string> names = new List<string>();- present in namespace System.Collections.
+It has better perf .
+
+18.What are threads in c#.? Threads are used to execute code parallely.Namespace : System.Threading.
+Time is shared betwn threads,
+
+19.Thread vs Task ? In .net 4X Task Parallel Lib was introduced. 
+A : In reality threads do context switching and time slicing but not parallel processing actually.
+Every thread is associated with processAffinity, means if our machine is octa core processor then there are 8 cores or 8 processing units and each processing unit has threads, when we run multiple threads they are bound to one core…but when we trigger using Task it looks for number of cpus internally and uses those there by effectively realizing the parallel programming.
+
+Straight answer : Tasks do parallel processing, pooling and can be able to return the results , cancel , chain ,Async await, threads also returns but we need to use delegates and events etc..
+
+20.How are exceptions handled in c#? using try catch block.
+A: What are exceptions ? These are run time errors not the compile time ones like accessing value from a null object.
+What is the use of finally block? We use it to run some process irrespective of an exception is occurred, mostly we write some clean up code. Or memory freeing code, or logging code.
+
+21.why do we need to use Out keyword ? 
+When we write a c# method it only returns only one object, to make a func return more than one val , we use out keyword, when we use out , it should definitely be assigned in the method, if not we use ref.
+
+22.What are delegates and what is the use of it?
+A: delegates are pointers to functions and the main purpose of the delegates is callbacks. 
+Advantages : A simplified implementation of call backs, Anonymous blocks of code, this helps in encapsulation of piece of code. For instance when u attach a event handler to a button , that handler is delegate. That button doesn’t need to know what fun it does when it is it, Another example is LINQ.Allows us to design libraries that are easily extensible, since using delegates we can hook our own funcs.There are 2 types delegates, unicast and multi cast, using multicast we can chain delegates…practical usage of multi cast is when an error occurs in an application if we want to store that error in logfile , database, some other service,..we can create a single delegate and assign all of these to it and call that delegate.
+Best video about delegates and events : https://www.youtube.com/watch?v=7j3GXOHd_K8.
+Event is an encapsulation over delegates that turns the multi cast delegate into publisher/subscriber pattern.
+So what are call backs? When I am running 2 process between 2 threads and if I want to establish a communication between then it is a call back .
+
+
+23.Abstract class vs Interfaces.
+A: abstract class is a half defined parent class where in we define some methods and leave others abstract where child classes can implement. Interfaces do not contain any method definition, they just have method signatures.
+Interfaces are kept with out definition so that developers can realize abstraction concept.
+Interfaces are implemented whereas abstract classes are extended.
+Basically when we plan to design something and are sure that these details will be in domain then we create an interface, and second step we create an abstract class by implementing the interface and define few methods that will be same around any sub classes then in 3rd step we create our class and inherit the abstract class and define those abstract methods.
+Putting simply :
+Interface is a contract between a caller and a callee , it is used in planning abstraction, and it is implemented whereas abstract class is half defined parent class, used to share common logic in child classes and it is inherited,
+ 
+Yeah Pure abstract classes are same like interfaces, but using PAC in complicated scenarios may become a design/architectural mistake.
+https://www.youtube.com/watch?v=0EnSPBVrbG0
+https://www.youtube.com/watch?v=DMEyAYQ6Gks
+
+
+24.Abstraction vs Encapsulation.
+Abstraction : It is used to hide the implementation details and show only essential details based on requirement where as encapsulation is binding data members and methods that operate on this data into a single unit so that they are not directly accessed by outsiders.
+ 	
+25.Can a class implement interfaces with same method names?
+A: Yes, we can implement interfaces that have same method using the “explicit interface implementation”.
+A: Interface I1 { M1() }, Interface2 {M1() }
+Class A : I1 : I2
+{
+   Void I1.M1(){   “ called I1” }
+   Void I2.M1(){   “ called I2” }
+}
+Main(){
+  I1 obj1 = new A()
+Obj1.M1()-- prints called
+
+I2 obj2 = new A()
+Obj2.M1()-- prints called I2
+}
+
+26. Const vs ReadOnly?
+A: Both are used to define constants in our application. Const is a compile time constant where as Read only is a dynamic constant. 
+Public static constant PI = 3.14
+Public static readonly name {
+Set{
+ Get from configuration file when app starts and set this value.
+}
+}’
+
+27.What is
+Type safe : C# is type safe language, it does not allow to convert from one datatype to another without explicit type conversion. (var a = 10 , var b = “10” in javascript a+b returns 1010 because it is not type safe if u do same thing in c# it throws error as it is type safe language.
+Casting : Change the value from one type to another type. Implicit and explicit, implicit no data loss, explicit data loss
+Diff btwn Convert.ToXXXX() and casting ?
+
+28.Int16, Int32, Int64 ? 
+A: They differ in size and capacity. Int16 is 2bytes, Int32 is 4bytes and Int64 is 8 bytes. MaxValues can be obtained from Int16.MaxValue and Int16.MinValue
+29.String vs StringBuilder.
+A: String means Immutable , String builder are mutuable .Mutuable means it can change where as immutable means it cannot change.
+String x = ‘abc’
+For(int i from 0 to 1000) { x= ‘shiv’ + x }--- for each iteration a new memory string size of memory gets created this means it is immutable the first created memory will not be changed instead a new memory gets created every time.
+StringBuilder is opposite to above where only 1 memory location is created and all other concats are appended.
+Then main reason Microsoft created this immutable behavior of string is Thread safety. Suppose we have a single string variable and it is manipulated by many threads this causes an issue which is unexpected.
+
+30.What are virtual functions?
+A:Virtual functions are those functions whose beheaviour is overridden in their inherited class. Virtual keywork or virtual functions are used to attain polymorphism (runtime). Base class will use virtual keywork and child class uses override keyword.
+What are static members?
+A: These are the members of a class that are declared using static for which only one memory location is created. These members can be accessed without instantiating the objects.
+Static fields/properties: Memory for them is allotted individually without any relation to objects.
+Static Methods: These operate only on static fields.
+Generics vs Generic collection:
+A: Basically, generics is a concept and generic collection is implementation of generics.
+On a high level. In order to loosely couple a function or a method or a class with data type it uses, we go for generics.
+Best example is to use generics to implement compare function.
+What is web.config file in asp.net ?
+https://www.codeproject.com/Articles/301726/Web-config-File-ASP-NET
+A: It is basically a configuration file which is in xml format where we can define various setting of the web application, we use like database connection strings. There can be multiple web.config files for each folder of the web application. ConfigurationManager.AppSettings["AppType"];
+We can have any number of web.config files for an application. Each web.config applies settings to the folder it is present in and all its child folders.
+All web.config files inherit from one main config file located at …….netfrmwork\config\web.config
+<configuration> is the root element of web.config file. Basic tag in the web.config file is the system.web tag and its children are <Compilation debug=true targetFramework=””><assemblies/></>
+<authentication>, <authorization>
+If we need to control each folder setting then we can have web.config file in every folder, else we can put them in one file using location property and controlling it using system.web tag.
+<location path=”sitejs”>
+<system.web>
+<authorization><allow users=”*”/></authorization>
+</system.web>
+</location>
+
+Why are REST calls cached and soap calls not?
+A:
+APS.NET Web Api is a framework(because it has a set of build in libraries and does some thing for us for which we have to behave in a certain way and hit it)that is used to develop or build HTTP services to reach a broad range of clients. It is ideally used to realize Restfu applications on .NET Framework. Latest version on Web API is 2.2
+REST vs RESTful.
+Rest is an architecture style which says the communications between 2 parties will be resource based. The basic idea of REST is to use http protocol and use its benefits (caching, stateless) rather than using complex protocols like SOAP (in WCF).
+RestFul services are the web services that are built on .NET using Rest architecture style.
+In ASP.NET web api MediaTypeFormatter formats the input and output to json or xml or to any specific format that we select.s
+KEY DIFFERENCE
+WCF offers request-reply, one-way, or duplex while Web API is by default request-reply only. WCF is used for developing SOAP-based services whereas Web API is used for both SOAP-based and RESTful services. ... WCF supports HTTP, UDP, and custom transport protocol whereas Web API supports only HTTP protocol.
+
+WCF:
+https://stackoverflow.com/questions/43134930/how-wcf-request-is-handled-in-iis
+1.What is WCF? 
+A: It is a platform or a framework that is used to develop service-oriented applications. It was developed by Microsoft and is present from .net 3.5.0. Simply it is an answer given by Microsoft for service-oriented application development.
+SOA:
+It is an architectural pattern using which we can design a loosely coupled architecture for the application by defining services and be able to communicate with each other using message adhering to some standards. The idea is grow beyond normal classes and objects but to think in a generalized format and defined services for interoperability.
+SOA principles:
+
+What are the characteristics of a message?
+A: It is should be able to tell where the service is currently, it should tell how (which protocol ) to communicate with the service is it http,tcp,xml,…etc?,What does the service need so that we can utilize it.
+
+
+In WCF the above characteristics of messages are defined as
+Address : Where It basically is a URL where we can find the service.
+Binding : How can be accessed using SOAP over HTTP or Binary over TCP as such.
+What: Contract It is an agreement with the service that I will send this and I need this technically input and outputs.
+These are defined in web.config file under services umberalla.
+<services>
+<Service name=”” >
+<endpoint address=”” binding=”” contract=””/>
+</services>
+EndPoint : It basically is an entry point to the service where we define address,binding and contract for a service. Or simply an endpoint is what a service exposes.
+By putting a [serviceContract] attribute above a class it means the WCF service or platform knows this class or interface needs to be host this class as a service. With in this interface we define an [operation contract] as an attribute over methods that we need to expose as part of the service.
+There will be parameters for the attributes Action, IsOneWay ..etc.
+A user has to send a specific data and invoke a service so this contract of data is defined as a [DataContract] (basically a class which represents input to service) and each input is a [DataMember]
+So now that a service is typically an interface, can a service or a WCF support method overloading?
+Ex:[service contract]
+Public Interface CookingService
+{
+[OperationContract]
+ Rice CookRice(Polished Rice)
+[OperationContract(Name=”CookRiceWithVegetable”)]
+
+Rice CookRice(Polished Rice,Vegetable veggie)
+}
+The CookRice is overloaded , so basically with the same class as above it fails we need to use Name attribute in operation contract.
+Marshalling: Basically, in webservice or WCF that follow talk each other in terms of messages the client will format the input message to a service into a soap format and it is called marshalling.
+DeMarshalling: Process of unwrapping a message is demarshalling.
+SOAP : Simple object access protocol. This is basically a standard that messages should be followed to communicate with services. https://www.guru99.com/soap-simple-object-access-protocol.html
+SOAP is basically a protocol and Rest is an architectural pattern. Soap message is “envelope”  which contains headers etc while Rest message is a postcard.
+Simple answers for difference between web api, services, and wcf.
+https://www.dotnetfunda.com/articles/show/221/windows-communication-foundation-faq-part-1#WhatarethemaincomponentsofWCF
+Fault exceptions in wcf , when we have to return an exception to a user we cant do it using a simple c# style, in WCF all the comm is done via soap “XML”  format. So raising a new FaultException will solve the purpose. 
+https://www.dotnetfunda.com/articles/show/222/WCF.aspx#Introduction
+What are the 3 main components of WCF?
+A: Service class, hosting environment, endpoints.
+
+
+StateManagement:
+In ecommerce application how you can get current cart added product details or order details on confirmation page, simply solution is using state management.
+1.Basically all web applications are built on http protocol and http protocol is stateless protocol.
+Http is stateless: this means the connection between the client and server ends or gets completed when a response is received, so for the subsequent request the server doesn’t know who the client is.
+Amazon , u logged in ->req1, added items to cart-> req2, added card details-> req3, payment page->req4.
+Basically the server receiving req1,2,3,4 doesn’t know who the client is..because as soon as the request is given a response tht connection in terminated.
+So to overcome the stateless behavior of http request or protocol we have session and view state.
+Session[variableName] = variable value.- this will be present on server and looking at it between each request, will server the stateful purpose.
+To maintain the state of the client asp.net has 2 ways one is to store it on client machine as cookies which are sent to server for every request and other is to store on server side.
+Client side we have hidden fields, Querystring, ViewState & Control State, Cookies,
+Hidden fields : <asp:HiddenField ID=”” runat=”server” value=””/>
+Server side we have Session and Application.
+Cookies are the objects that are sent by the webserver and saved on the client side or client browser.
+All cookies travel for each http request to the server.
+Which class : HttpCookie class. Var cookie = new HttpCookie(“somename”){
+Value= , httponly, expires..
+}
+Context.response.cookies.set(cookie);
+Types of cookies : Persistent and non-persistent cookies:
+Persistent means these cookies will remain for a duration whose value is set by the creator. Like we manyally create it and set its value.
+NonPersistent cookies: These cookies will die once the client destroys the web browser.
+Other uses of cookies can be : personalization : google uses it to allow registered users to decide how many search results to show, other web sites remember the UI color,Tracking 
+ViewState is basically used to hold the state of a page, if we move from one page to another the state in page 1 is lost data or value is stored in encrypted format.
+In traditional asp.net, we request pages from server or when ever we hit the server, it replies with a page so Page_Load event gets invoked everytime.
+So while passing from one page to another if we want to maintain state then we can use query strings also. Like “destinationPage?username:name&Password:pwd” and we can access it like this.Request.QueryString[“username”]..
+8.   What is Control state?
+A: 
+5.  Can we Enable/Disable ViewState?
+Yes, you can enable disable ViewState with different levels
+Control Level:
+ViewState for a specific control can be enabled or disabled by setting EnableViewState property as follows:
+aControl.EnableViewState = false;
+Page Level :
+We can enable/disable ViewState for a complete page as follows:
+<%@ Page Language="C#" EnableViewState="false" %>
+Application Level:
+For whole application, we can enable/disable views in configuration file as follows:
+  <pages enableViewState="false">
+      ....
+  </pages> 
+ 
+
+Server side state management techniques : 
+Sessions and Application Objects..
+https://www.codeproject.com/Articles/32545/Exploring-Session-in-ASP-Net
+Session are much like view state : these are server side state management techniques, basically when ever a asp.net engine is first responded it responds with a session cookie (ASP.NET_sessionID) this id will be sent to server and that is how server will realize the user and uses that session data it has and does statemanagment. So bottom line is a cookie gets sent so tht server realizes it , but when user turns cookies off then in web.config file under system.web> we have <sessionState cookieless=”AutoDetect”/> when we use this, that asp.net_sessionid cookie gets sent to the server as a query string and session object of user gets recognized.
+Do session variables use cookies? YES
+Basically every web browser has 2 types of storages , like session storage and local storage, session storage persist until window is not closed. Session storage is little compared to local storage,  we can use getItem and setItem methods to access them.
+Session modes : There are basically 4 types of session modes like Off, Inproc(default) where session data is stored in memory worker process memory, outproc or state server where session data is stored out side the app domain and independent of iis in a separate windows service which is handled by aspnet_state.exe,sqlserver where session is stored in DB and custom 
+In web.config we need to place <sessionState mode=”off, inproc,…..”
+SQL server session mode. Independent on app pool or domain , session data remains as is since it is stored in DB, but the problem is overhead due to serialization and deserialization.
+To set up sql server we need 2 scripts, InstallSqlState.sql, and UninstallSqlState.sql.
+Session events : Session_start, Session_END these can be accessed in Global.asax file.
+Session.Remove(string) -> removes an item from session object.
+Session.RemoveAll()->removes all items in object.
+Session.clear()-> same as RemoveAll() RemoveAll calls clear internally.
+Session.Abandon()-> cancels current session. (deletes session object).
+Difference between  Viewstate, sessionState and application state.
+A: Availability : View state -> only for the page, Sessionstate -> only in session, ApplicationState->across all pages and across all sessions.
+Storage : view state is stored on page in hidden field but in encryted format. Session state is stored in worker process memory or on web server.Application state is also stored in server.
+When do they expire : view data : when we move to a different page, session when it expires usually 20 minutes we can set it in web.config like<sessionState timeout=””>, application : the process running the app is restarted.
+When do we use sql server session mode?
+When our application is scaled to many servers the  to maintain a centralized state storage we use sql server mode.
+UserProfile or Profile properties: this is also a server side state management technique where we configure what are the properties of the user we need to store.
+This Profile properties are persistent data unlike session data which gets lost when a session is expired or a user closes the browser window.
+
+What goes into web.config?
+A: <system.web>
+
+  <anonymousIdentification enabled="true" />
+  <profile>
+    <properties>
+      <add name="PostalCode" 
+        type="System.String" 
+        allowAnonymous="true" />
+    </properties>
+  </profile>
+ASP.NET includes a profile provider that stores data using Microsoft SQL Server. The default ASP.NET machine configuration contains a default SqlProfileProvider instance named AspNetSqlProfileProvider that connects to SQL Server on the local machine. By default, the ASP.NET profile feature uses this instance of the provider. Alternatively, you can specify a different default provider in your application's Web.config file.
+<!-- other Web.config settings here -->
+</system.web>
+https://www.codechef4u.com/post/2015/08/18/state-management-interview-questions-part-2
+17. Explain in detail Session state modes?
+Session state supports three modes:
+1.  InProc
+2.  State Server
+3.  SQL Server
+InProc Mode
+1. This mode stores the session data in the ASP.NET worker process.
+2. This is the fastest among all of the storage modes.
+3. This mode effects performance if the amount of data to be stored is large.
+4. If ASP.NET worker process recycles or application domain restarts, the session state will be lost.
+Session_End() event is supported by which mode?
+Session_End() event is supported by InProc session mode only.
+State Server mode
+1. In this mode, the session state is serialized and stored in memory in a separate process.
+2. State Server can be maintained on a different system.
+3. State Server mode involves overhead since it requires serialization and de-serialization of objects.
+4. State Server mode is slower than InProc mode as this stores data in an external process.
+SQL Server Mode
+In this storage mode, the Session data is serialized and stored in a database table in the SQL Server database.
+In which data base does sql server session mode data is stored ?
+A:  In tempDB , there is a tool which generates database tables called ASPStateTempSessions, APSStateTempApplications and creates stored procs around it to manage them.
+1. This is reliable and secures storage of a session state.
+2. This mode can be used in the web farms.
+3. It involves overhead in serialization and de-serialization of the objects.
+4. SQL Server is more secure than the InProc or the State server mode.
+Use Reliability  and Scalability terms more often.
+ For example say when we use Inproc mode reliability and scalability has effects..
+Web Farm and Web Garden ?
+What is [serializable] attribute ?
+
+
+ASP.Net MVC.
+https://www.c-sharpcorner.com/UploadFile/00a8b7/Asp-Net-mvc-life-cycle/
+in web forms we basically request for a physical page like login.aspx,,etc so every time a new page is asked we are literally asking for a resource at server.
+
+every aspx page has a code behind page where server side logic is executed, basically .aspx will have markup (asp:server control markups and code behind has 
+page events).where we handle button clicks etc and page related events
+A page before loaded undergoes various stages like 
+PageRequest -> when it is requested
+Start ->  We need to set page props like Request and response objects
+Initialization -> for each contorol ID property is applied (note that this is a problem which stops us from using custom js)
+Load
+EventHandling---> post back event handling (basically post back means submitting form to server)
+Rendering -->
+Unloading -->
+SILVR U 
+
+and there are various events that a page class fires when serving a page to browser
+like
+PreInit - > after start stage is over. before Initialization.
+Init -----> 
+initcomplete, 
+preload
+load
+controllevelevent
+load complete
+pre render
+pre render complete
+save state complete
+render
+unload
+
+basically , in web forms a page has all this events and one has to apply props at each stage to realize a business func,
+aspx and aspx.cs are related via inheritence via @page directive.
+
+in MVC there are no page related events, ideally a request is made to a controller but not to a physical page, so all the page related events are removed.
+we write our own html and htmlHelper provides various methods to realize html.. now a seperation of control is achieved, using attribut routing or route table 
+we can map a request to a control and get the view
+
+
+When a http request is fired HTTP.sys (which is the part of networking subsystem of windows ) will listen to the request.
+
+Request -> HTTP.sys -> app pool -> worker process -> IsApi extension  creates Httpruntime object and Httpapplication object--> object will invoked handler
+.
+<system.web>
+<httphandler>
+<add verb="*" path="*" Type="namespace.classname, assemblyname"/>
+</httphandler>
+
+</system.web>
+
+Out of all mentioned above, httphandler part is a light weighted one.	
+
+to wrtire a custom handler we need to implement IHttpHandler interface (system.web) and implement ProcessRequest(HttpContext context) and IsReusable{
+
+context.Response.Write();
+}
+
+IsReusable: This property is to determine whether same instance of HTTP Handler can be used to fulfill another request of same type
+Also , basically HttpModules are also called in request pipeline and are invoked before and after httphandler are called
+we need to implement Ihttpmodule for it and shd implement init and dispose methods
+In Init we need to register methods encapsulting thm into events and inject them into applucation events.
+
+
+Abstract Explanation Diagram:
+ 
+In Depth Diagram:
+ 
+Request Flow"
+Here is the asp.net mvc request flow:
+ 
+On a high level, database normalization is  a process of organizing data in the database so that we avoid data inconsistency , data redundancy (data duplication) etc.
+There are essentially 6 steps to achieve normalization, where each step is called a normal form.
+First Normal Form: 
+We store only atomic data in a column, (like no comma separated entries which causes insert.update,delete issues)
+Each record or row is uniquely identified using a primary key.
+No repeating column groups (like Emp1, Emp2, Emp3 columns)
+Second form :
+It should satisfy first normal form and also , there should not be any partial dependencies.
+Ex : a score table which has studentID, SubjectID and marks and teacherID. Now to get marks uniquely we can use studentID and SubjectID together as primary key and get marks for a student in a subject, but the teacher col is only related to subject ID and not studentID tht means teacher is partially dependent on pK.. 2nd normal form tells this should not be present.
+3rd normal form:
+It should follow 2nd form and there should be no transient dependencies . Transient dependencies means a non prime column that depends on another non-prime column.
+For example from earlier table (score_id, student_id, subject_id, marks) we have 2 more cols (exam_name, total_exam_marks) now our PK is student_id + subject_Id using which we can get marks , examname and total exam marks, but total exam marks depends on exam name (means sliptest is for 10 mrsk , unit test is for 25 mrks, quarterly is for 50 etc…) transient dependencies exist…
+Simple to uniquely get a colu we shd only rely on PK..
+4th normal form:
+It should satisfy BCNF and it should not have multi valued dependency .
+MultiValuedDependency: Basically for a given key there are 2 r
+
+Views : 
+A view can be called as a virtual table and is nothing but a saved select sql.
+Stored proc vs View :
+Stored proc accepts params, views don’t. Stored proc can perform modifications to any table view cannot they are restricted to select.
+Simply using views we can see the same data from different views hiding few in one view and unhididng in another.
+Create View name as select…
+Adv : It is used to hide the complex sql or make a complex select sql reusable , present row and column level security.
+
