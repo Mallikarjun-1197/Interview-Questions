@@ -1,0 +1,13 @@
+A runtime is a crucial component of a programming environment that provides the necessary services and support for the execution of applications written in a particular programming language. It manages the execution of code, handles system resources, and provides important functionalities that developers rely on during the runtime of their applications
+Examples of Runtime : 
+CLR : used by dot net framework , JVM : used by Java , node.js , python interpreter 
+
+With above being said, The .NET Framework is designed to work only on Windows. 
+It is tightly integrated with the Windows operating system and relies on Windows-specific features like the Windows Registry, Windows API, and COM (Component Object Model).
+
+To minimize the above tight dependency , MS introduced DotNet Core with a CORECLR Runtime which is lightweight and allows the apps to run on any OS.
+During runtime, .NET Core can detect the operating system and load the appropriate implementations for that platform.
+Dotnet core also allows a modular design which means devs can only plug what features they need and then use that.
+
+A Web app or a web api ultimately is designed to respond for a HTTP Request. Dotnet core introduced a default web server called Kestrel.
+This webserver typically hosts the app that is developed using dotnet core and this is built on libuv for handling requests.
